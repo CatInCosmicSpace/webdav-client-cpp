@@ -75,12 +75,12 @@ auto WebDAV::Server::download(const std::string & dir, const std::string & downl
 	for (auto i : not_sha_files) {
 		if (WebDAV::Server::is_dir(i)) {
 			boost::filesystem::create_directory(download_directory + "/" + i);
-			_chdir((download_directory + "/" + i).c_str());
+			chdir((download_directory + "/" + i).c_str());
 			download(dir + i, download_directory + "/" + i.substr(0, i.length() - 1), client);
 		}
 		client->download(dir + i, download_directory + "/" + i);
 	}
-	_chdir("../");
+	chdir("../");
 }
 
 auto WebDAV::Server::file_list(const std::string & path) -> std::vector<std::string> {
