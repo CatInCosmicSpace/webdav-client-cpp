@@ -3,10 +3,8 @@
 #include <sstream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <openssl/aes.h>
-#include <openssl/evp.h>
+#include <openssl/ssl.h>
 #include <boost/iostreams/device/mapped_file.hpp>
-#include <openssl/sha.h>
 
 #pragma comment(lib, "libeay32.lib")
 #pragma comment(lib, "ssleay32.lib")
