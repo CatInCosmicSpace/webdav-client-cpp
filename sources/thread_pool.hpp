@@ -1,5 +1,4 @@
-﻿#pragma once
-#define BOOST_MEM_FN_ENABLE_CDECL
+#pragma once
 
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
