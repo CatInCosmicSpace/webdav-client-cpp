@@ -34,12 +34,12 @@ matrix:
         - os: linux
           compiler: clang-3.6
           env: BUILD_FROM_SOURCES="no" COMPILER="clang++-3.6" BUILD_TESTS="TRUE"
-        - os: osx
-          compiler: gcc-5
-          env: BUILD_FROM_SOURCES="no" COMPILER="clang++-3.6" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/opt/openssl"
-        - os: osx
-          compiler: clang-3.6
-          env: BUILD_FROM_SOURCES="no" COMPILER="g++-5" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/opt/openssl"
+        #- os: osx
+        #  compiler: gcc-5
+        #  env: BUILD_FROM_SOURCES="no" COMPILER="clang++-3.6" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/opt/openssl"
+        #- os: osx
+        #  compiler: clang-3.6
+        #  env: BUILD_FROM_SOURCES="no" COMPILER="g++-5" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/opt/openssl"
           
 before_install:
   - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS" LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"; fi'
