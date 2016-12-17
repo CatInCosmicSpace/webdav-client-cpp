@@ -1,5 +1,5 @@
 #pragma once
-#include "client.hpp"
+#include <webdav/client.hpp>
 #include <memory>
 #include <boost/filesystem/path.hpp>
 
