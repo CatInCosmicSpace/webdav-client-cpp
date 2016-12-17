@@ -23,6 +23,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(wdc)
 
+include_directories("/usr/local/ssl/include")
+
 set(WDC_VERSION_MAJOR 1)
 set(WDC_VERSION_MINOR 0)
 set(WDC_VERSION_PATCH 1)
