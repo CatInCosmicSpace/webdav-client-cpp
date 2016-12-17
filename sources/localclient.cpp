@@ -104,10 +104,8 @@ auto WebDAV::LocalClient::encrypt(std::string name) -> std::string {
 
 auto WebDAV::LocalClient::get_file_sha256(std::string path) -> const std::string{
 	path = boost::filesystem::system_complete(path).generic_string();
-	FILE * input;
-	fopen_s(&input, path.c_str(), "rb");
-	FILE * output;
-	fopen_s(&output, (path + ".sha256").c_str(), "wb");
+	FILE * input = fopen(path.c_str(), "rb");
+	FILE * output = fopen((path + ".sha256").c_str(), "wb");
 	if (!input || !output)
 		throw;
 	unsigned char hash[SHA256_DIGEST_LENGTH];
@@ -134,8 +132,7 @@ auto WebDAV::LocalClient::get_string_sha256(std::string path_to_sha256) -> const
 		path_to_sha256 = get_file_sha256(path_to_sha256);
 	}
 	path_to_sha256 = boost::filesystem::system_complete(path_to_sha256).generic_string() + ".sha256";
-	FILE * input;
-	fopen_s(&input, path_to_sha256.c_str(), "rb");
+	FILE * input = fopen(path_to_sha256.c_str(), "rb");
 	char buffer[32];
 	fread(buffer, sizeof(char), 32, input);
 	std::stringstream ss;
