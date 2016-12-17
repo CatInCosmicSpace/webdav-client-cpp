@@ -63,6 +63,7 @@ script:
       sudo apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev libboost-all-dev;
     else
       brew install openssl curl pugixml boost;
+      brew link --force openssl;
       env LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography;
     fi;
   fi;
