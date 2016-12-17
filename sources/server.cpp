@@ -1,7 +1,7 @@
 #include "server.hpp"
 #include <sstream>
 #include <boost/bind/protect.hpp>
-#include <direct.h>
+#include <unistd.h>
 #include <openssl/evp.h>
 #define BUFSIZE 1024
 
