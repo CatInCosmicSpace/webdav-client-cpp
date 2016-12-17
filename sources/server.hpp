@@ -3,7 +3,7 @@
 
 #define BOOST_MEM_FN_ENABLE_CDECL
 #pragma once
-#include "client.hpp"
+#include <webdav/client.hpp>
 #include "thread_pool.hpp"
 #include <memory>
 #include <boost/filesystem/operations.hpp>
