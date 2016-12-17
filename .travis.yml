@@ -48,8 +48,10 @@ script:
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       sudo apt-get update;
       sudo apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev;
+      sudo apt-get update -qq
+      sudo apt-get install libboost-all-dev
     else
-      brew install openssl curl pugixml;
+      brew install openssl curl pugixml boost;
     fi;
   fi;
 - cmake .. -DBUILD_TESTS:BOOL=$BUILD_TESTS -DHOME_PUGIXML="/usr/local" && make
