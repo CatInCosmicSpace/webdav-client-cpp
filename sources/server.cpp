@@ -2,7 +2,7 @@
 #include <sstream>
 #include <boost/bind/protect.hpp>
 #include <unistd.h>
-#include "/usr/local/ssl/include/openssl/ssl.h"
+#include <openssl/ssl.h>
 #define BUFSIZE 1024
 
 threadPool pool;
