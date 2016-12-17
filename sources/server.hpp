@@ -1,7 +1,6 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#define BOOST_MEM_FN_ENABLE_CDECL
 #pragma once
 #include <webdav/client.hpp>
 #include "thread_pool.hpp"
