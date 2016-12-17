@@ -25,6 +25,7 @@ matrix:
         - os: osx
           compiler: gcc-5
           env: BUILD_FROM_SOURCES="yes" COMPILER="g++-5" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/ssl"
+          env: LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography
         - os: osx
           compiler: clang-3.6
           env: BUILD_FROM_SOURCES="yes" COMPILER="clang++-3.6" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/ssl"
