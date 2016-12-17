@@ -25,7 +25,6 @@ matrix:
         - os: osx
           compiler: gcc-5
           env: BUILD_FROM_SOURCES="yes" COMPILER="g++-5" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/ssl"
-          env: LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography
         - os: osx
           compiler: clang-3.6
           env: BUILD_FROM_SOURCES="yes" COMPILER="clang++-3.6" BUILD_TESTS="TRUE" OPENSSL_ROOT_DIR="/usr/local/ssl"
@@ -52,9 +51,7 @@ before_install:
    
 script:
 - mkdir build && cd build
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
- export CFLAGS="-I/usr/local/ssl/include $CFLAGS" LDFLAGS="-L/usr/local/ssl/lib $LDFLAGS"; 
- fi;
+ - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-I/usr/local/ssl/include $CFLAGS" LDFLAGS="-L/usr/local/ssl/lib $LDFLAGS"; fi'
 - if [ "$BUILD_FROM_SOURCES" == "yes" ]; then
         ../tools/build_requirements.unix.sh;
   else
