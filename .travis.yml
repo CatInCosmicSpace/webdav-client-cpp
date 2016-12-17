@@ -51,6 +51,7 @@ before_install:
    
 script:
 - mkdir build && cd build
+ - 'if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-I/usr/local/opt/openssl/include $CFLAGS" LDFLAGS="-L/usr/local/opt/openssl/lib $LDFLAGS"; fi'
 - if [ "$BUILD_FROM_SOURCES" == "yes" ]; then
         ../tools/build_requirements.unix.sh;
   else
