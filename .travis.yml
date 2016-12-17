@@ -11,6 +11,7 @@ addons:
         sources:
             - llvm-toolchain-trusty-3.6
             - ubuntu-toolchain-r-test
+            - libboost1.62-all-dev
 
 matrix:
     include:
