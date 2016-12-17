@@ -42,10 +42,10 @@ auto WebDAV::Server::decrypt(std::string & name) -> const std::string {
 	name = boost::filesystem::system_complete(name).generic_string();
 	auto new_name(name.substr(0, name.rfind(".enc")));
 	int outlen, inlen;
-	FILE * input;
-	fopen_s(&input, name.c_str(), "rb");
-	FILE * output;
-	fopen_s(&output, new_name.c_str(), "wb");
+	FILE * input = fopen(name.c_str(), "rb");
+	//fopen_s(&input, name.c_str(), "rb");
+	FILE * output = fopen(new_name.c_str(), "wb");
+	//fopen_s(&output, new_name.c_str(), "wb");
 	unsigned char inbuf[BUFSIZE], outbuf[BUFSIZE];
 	unsigned char key[32] = "testtestforaescrypttesttesttest";
 	unsigned char iv[8] = "testvec";
