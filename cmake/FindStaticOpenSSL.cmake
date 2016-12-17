@@ -40,6 +40,7 @@
 
 if (UNIX)
   find_package(PkgConfig QUIET)
+  find_package(openssl REQUIRED)
   pkg_check_modules(_OPENSSL QUIET openssl)
 endif ()
 
