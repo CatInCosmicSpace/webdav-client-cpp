@@ -1,5 +1,5 @@
 #include <webdav/server.hpp>
-#include <catch.hpp>
+#include "catch.hpp"
 
 SCENARIO("Uploading", "upload") {
 	std::map<std::string, std::string> options;
