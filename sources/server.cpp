@@ -16,8 +16,9 @@ auto WebDAV::Server::decrypt_and_clear(std::string path) -> void {
 	}
 	pool.start(8);
 	pool.join();
-	for (auto i : list) 
-		std::remove(i.c_str());
+	for (auto i : list)
+		if (!boost::filesystem::is_directory(i) && i.rfind(".enc") != std::string::npos)
+			std::remove(i.c_str());
 }
 
 auto WebDAV::Server::check_not_sha(std::vector<std::string> & input) -> std::vector<std::string> {
