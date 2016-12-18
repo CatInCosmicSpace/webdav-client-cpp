@@ -28,6 +28,8 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 link_directories(${Boost_LIBRARY_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
+set(OPENSSL_LIBRARIES "/usr/local/ssl/lib")
+
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 
