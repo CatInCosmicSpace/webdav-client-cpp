@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "localclient.hpp"
+#include <webdav/localclient.hpp>
 #include <boost/filesystem/operations.hpp>
 
 SCENARIO("Clear encrypted and hashes", "clear_encrypted, clear_hashes") {
