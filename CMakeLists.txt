@@ -122,6 +122,9 @@ if(BUILD_TESTS)
 	add_executable(check ${${PROJECT_NAME}_TEST_SOURCES})
 	target_link_libraries(check ${PROJECT_NAME} ${DEPENDS_LIBRARIES})
 	add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+	add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${CMAKE_CURRENT_SOURCE_DIR}/fixtures $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 endif()
 
 include(CPackConfig.cmake)
