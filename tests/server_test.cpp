@@ -6,18 +6,18 @@ SCENARIO("Downloading", "download") {
 	WebDAV::Server::set_options("webdav.test.travis", "webdav.test.test", options);
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
 
-	WebDAV::Server::download("/tmp_dir/", boost::filesystem::system_complete("upload").generic_string(), client);
-	const std::string path = "upload/test";
+	WebDAV::Server::download("/tmp_dir/", boost::filesystem::create_directories("download").generic_string(), client);
+	const std::string path = boost::filesystem::system_complete("download");
 	WebDAV::Server::decrypt_and_clear(path);
 
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/1.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/2.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/3.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/5.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/test1/3.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/test1/4.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/test2/4.txt")));
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("upload/test/test/test2/5.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/1.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/2.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/3.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/5.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/test1/3.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/test1/4.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/test2/4.txt")));
+	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/test2/5.txt")));
 
 	//REQUIRE(!boost::filesystem::exists("1.txt.sha256"));
 	//REQUIRE(!boost::filesystem::exists("2.txt.sha256"));
