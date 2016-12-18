@@ -68,7 +68,9 @@ SCENARIO("Uploading", "upload") {
 	std::map<std::string, std::string> options;
 	WebDAV::LocalClient::set_options("webdav.test.travis", "webdav.test.test", options);
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
-
+	
+	if (!client->check("/tmp_dir"))
+		client->create_directory("tmp_dir", true);
 	WebDAV::LocalClient::upload("upload", "/tmp_dir/", client);
 
 	WebDAV::LocalClient::clear_encrypted("upload");
