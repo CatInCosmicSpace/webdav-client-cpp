@@ -38,7 +38,7 @@ std::string ToHex(const std::string& s, bool upper_case /* = true */) {
 SCENARIO("Check hash", "get_file_sha256") {
 	std::string hash = "f63dba41a1978798e28ee51144d658c8";
 	std::string other_hash = ToHex(WebDAV::LocalClient::get_string_sha256("test/1.txt"), false);
-	std::remove("test/1.txt.sha256");
+	//std::remove("test/1.txt.sha256");
 	REQUIRE(hash == other_hash.substr(0, 32));
 }
 
