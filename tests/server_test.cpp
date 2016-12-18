@@ -5,12 +5,12 @@ SCENARIO("Downloading", "download") {
 	std::map<std::string, std::string> options;
 	WebDAV::Server::set_options("webdav.test.travis", "webdav.test.test", options);
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
-	boost::filesystem::create_directories("download");
-	WebDAV::Server::download("/tmp_dir/", boost::filesystem::system_complete("download").generic_string(), client);
-	const std::string path = boost::filesystem::system_complete("download").generic_string();
+	boost::filesystem::create_directory("download");
+	WebDAV::Server::download("/tmp_dir/", "download", client);
+	const std::string path = "download";
 	WebDAV::Server::decrypt_and_clear(path);
 
-	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/1.txt")));
+	REQUIRE(boost::filesystem::is_regular_file("download/test/1.txt"));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/2.txt")));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/3.txt")));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/5.txt")));
