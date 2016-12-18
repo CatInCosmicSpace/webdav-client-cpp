@@ -10,7 +10,7 @@ SCENARIO("Downloading", "download") {
 	const std::string path = "download";
 	WebDAV::Server::decrypt_and_clear(path);
 
-	REQUIRE(boost::filesystem::is_regular_file("download/test/1.txt"));
+	REQUIRE(boost::filesystem::exists("download/test/1.txt"));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/2.txt")));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/3.txt")));
 	REQUIRE(boost::filesystem::is_regular_file(boost::filesystem::system_complete("download/test/test/5.txt")));
