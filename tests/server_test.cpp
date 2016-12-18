@@ -1,4 +1,4 @@
-#include <server.hpp>
+#include <webdav/server.hpp>
 #include <catch.hpp>
 
 SCENARIO("Uploading", "upload") {
