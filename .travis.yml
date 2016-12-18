@@ -9,11 +9,10 @@ addons:
             - clang-3.6
             - gcc-5
             - libboost-dev
-            - libboost1.61-all-dev
         sources:
             - llvm-toolchain-trusty-3.6
             - ubuntu-toolchain-r-test
-            - boost-latest
+            - libboost1.61-all-dev
 
 matrix:
     include:
