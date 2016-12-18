@@ -6,7 +6,7 @@ SCENARIO("Downloading", "download") {
 	WebDAV::Server::set_options("webdav.test.travis", "webdav.test.test", options);
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
 
-	WebDAV::Server::download("/tmp_dir/", "upload/", client);
+	WebDAV::Server::download("/tmp_dir/", "upload", client);
 	const std::string path = "upload/test";
 	WebDAV::Server::decrypt_and_clear(path);
 
