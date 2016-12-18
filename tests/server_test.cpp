@@ -8,7 +8,7 @@ SCENARIO("Download and clean", "download") {
 	boost::filesystem::create_directories("download");
 	chdir((boost::filesystem::current_path().generic_string() + "/" + "download").c_str());
 	WebDAV::Server::download("/tmp_dir/", "download", client);
-	client->clean("tmp_dir/")
+	client->clean("tmp_dir/");
 	const std::string path = "download";
 	WebDAV::Server::decrypt_and_clear(path);
 	REQUIRE(boost::filesystem::exists(boost::filesystem::system_complete("download/1.txt")));
