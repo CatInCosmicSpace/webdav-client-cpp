@@ -71,3 +71,4 @@ script:
 - make check ARGS="-VV"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - check
