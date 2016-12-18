@@ -24,8 +24,8 @@ cmake_minimum_required(VERSION 3.1)
 project(wdc)
 
 include_directories("/usr/local/ssl/include")
-find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(Boost REQUIRED COMPONENTS filesystem system)
+link_directories(${Boost_LIBRARY_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(Boost_USE_STATIC_LIBS ON)
