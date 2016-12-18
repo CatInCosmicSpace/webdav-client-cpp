@@ -7,8 +7,8 @@ SCENARIO("Uploading", "upload") {
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
 
 	WebDAV::Server::download("/tmp_dir/", "upload/test", client);
-
-	WebDAV::Server::decrypt_and_clear((std::string)"upload/test");
+	const std::string path = "upload/test";
+	WebDAV::Server::decrypt_and_clear(path);
 
 	REQUIRE(boost::filesystem::is_regular_file("upload/test/1.txt"));
 	REQUIRE(boost::filesystem::is_regular_file("upload/test/2.txt"));
