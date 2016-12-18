@@ -7,7 +7,7 @@
 
 threadPool pool;
 
-auto WebDAV::Server::decrypt_and_clear(std::string & path) -> void {
+auto WebDAV::Server::decrypt_and_clear(std::string path) -> void {
 	auto list = file_list(path);
 	for (auto i : list) {
 		if (i.rfind(".enc") != std::string::npos && boost::filesystem::is_regular_file(i)) {
