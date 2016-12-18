@@ -67,7 +67,7 @@ script:
       env LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography;
     fi;
   fi;
-- cmake .. -DBUILD_TESTS:BOOL=$BUILD_TESTS -DHOME_PUGIXML="/usr/local" && make
-
+- cmake .. -DBUILD_TESTS:BOOL=$BUILD_TESTS -DHOME_PUGIXML="/usr/local" -DGLOBAL_PROJECT_NAME=WDC && make
+- make check ARGS="-VV"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
