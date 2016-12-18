@@ -4,8 +4,7 @@
 #include <iostream>
 
 SCENARIO("Open file") {
-	std::ifstream test("test.txt");
-	std::cout << boost::filesystem::current_path().generic_string();
+	std::ifstream test("test/3.txt");
 
 	REQUIRE(test.is_open());
 }
