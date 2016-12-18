@@ -24,6 +24,9 @@ cmake_minimum_required(VERSION 3.1)
 project(wdc)
 
 include_directories("/usr/local/ssl/include")
+find_package(Boost REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIRS})
 
 set(WDC_VERSION_MAJOR 1)
 set(WDC_VERSION_MINOR 0)
