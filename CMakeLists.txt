@@ -28,6 +28,9 @@ find_package(Boost REQUIRED COMPONENTS system)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+
 set(WDC_VERSION_MAJOR 1)
 set(WDC_VERSION_MINOR 0)
 set(WDC_VERSION_PATCH 1)
