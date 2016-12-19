@@ -40,17 +40,12 @@ SCENARIO("Downloading", "download") {
 
 SCENARIO("Download from 2 disks", "multidownload") {
 	std::vector<std::map<std::string, std::string>> disks;
-	std::unique_ptr<WebDAV::Client> temp_client;
 	std::map<std::string, std::string> temp;
 	std::string login, password;
-	std::ifstream config("config_server");
-	while (config) {
-		config >> login >> password;
-		if (!config)
-			break;
-		WebDAV::Server::set_options(login, password, temp);
-		disks.push_back(temp);
-	}
+	WebDAV::Server::set_options("test.travis", "travis.test", temp);
+	disks.push_back(temp);
+	WebDAV::Server::set_options("webdav.test.travis", "webdav.test.test", temp);
+	disks.push_back(temp);
 
 	std::string download_directory = "download/";
 	std::string disk_directory = "/";
