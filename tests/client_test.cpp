@@ -74,7 +74,7 @@ SCENARIO("Uploading", "upload") {
 	WebDAV::LocalClient::upload("upload", "/tmp_dir/", client);
 
 	WebDAV::LocalClient::clear_encrypted("upload");
-	WebDAV::LocalClient::clear_hashes("upload");
+
 
 	REQUIRE(client->check("/tmp_dir/1.txt.enc"));
 	REQUIRE(client->check("/tmp_dir/2.txt.enc"));
@@ -83,14 +83,4 @@ SCENARIO("Uploading", "upload") {
 	REQUIRE(client->check("/tmp_dir/test/test1/3.txt.enc"));
 	REQUIRE(client->check("/tmp_dir/test/test1/4.txt.enc"));
 	REQUIRE(client->check("/tmp_dir/test/test2/4.txt.enc"));
-	REQUIRE(client->check("/tmp_dir/test/test2/5.txt.enc"));
-
-	REQUIRE(client->check("/tmp_dir/1.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/2.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/3.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/5.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/test1/3.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/test1/4.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/test2/4.txt.sha256"));
-	REQUIRE(client->check("/tmp_dir/test/test2/5.txt.sha256"));
-}
+	REQUIRE(client->check("/tmp_dir/test/test2/5.txt.enc"));} 
