@@ -1,7 +1,7 @@
 #include <server.hpp>
 #include <catch.hpp>
 
-SCENARIO("Uploading", "upload") {
+SCENARIO("Downloading", "download") {
 	std::map<std::string, std::string> options;
 	WebDAV::Server::set_options("webdav.test.travis", "webdav.test.test", options);
 	std::unique_ptr<WebDAV::Client> client(WebDAV::Client::Init(options));
