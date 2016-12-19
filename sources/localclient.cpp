@@ -25,6 +25,25 @@ auto WebDAV::LocalClient::check_hash(const std::string & path, const std::string
 	return check;
 }
 
+auto WebDAV::LocalClient::check_local_hash(const std::string & path) -> bool {
+	if (boost::filesystem::exists(path + ".sha256")) {
+		FILE * input = fopen((path + ".sha256").c_str(), "rb");
+		char buffer[32];
+		fread(buffer, sizeof(char), 32, input);
+		std::stringstream ss;
+		ss << buffer;
+		fclose(input);
+		std::string old_hash = ss.str();
+
+		std::string new_hash = get_string_sha256(path);
+		return (old_hash.substr(0, 32) == new_hash.substr(0, 32));
+	}
+	else {
+		get_string_sha256(path);
+		return false;
+	}
+}
+
 auto WebDAV::LocalClient::check_sha(std::vector<std::string> & input) -> std::vector<std::string> {
 	std::vector<std::string> sha_files;
 	for (auto i : input) {
@@ -52,19 +71,9 @@ auto WebDAV::LocalClient::clear_encrypted(const std::string & path) -> void {
 	}
 }
 
-auto WebDAV::LocalClient::clear_hashes(const std::string & path) -> void {
-	for (boost::filesystem::recursive_directory_iterator dir_end, dir(path); dir != dir_end; ++dir) {
-		boost::filesystem::path _path(*dir);
-		std::string a = _path.generic_string();
-		if (_path.generic_string().rfind(".sha256") != std::string::npos) {
-			boost::filesystem::remove(_path);
-		}
-	}
-}
-
 auto WebDAV::LocalClient::cut_path(std::string & path) -> const std::string{
 	if (path[path.length() - 1] == '/' || path[path.length() - 1] == '\\')
-		path.pop_back();
+	path.pop_back();
 	size_t index = path.rfind("/");
 	std::string new_path(path.substr(index + 1));
 	return new_path;
@@ -123,13 +132,9 @@ auto WebDAV::LocalClient::get_file_sha256(std::string path) -> const std::string
 	return (path + ".sha256");
 }
 
-auto WebDAV::LocalClient::get_string_sha256(std::string path_to_sha256) -> const std::string {
-	if (!boost::filesystem::exists(path_to_sha256 + ".sha256")) {
-		path_to_sha256 = get_file_sha256(path_to_sha256);
-	}
-	else {
-		path_to_sha256 = boost::filesystem::system_complete(path_to_sha256).generic_string() + ".sha256";
-	}
+auto WebDAV::LocalClient::get_string_sha256(std::string path_to_sha256) -> const std::string{
+	path_to_sha256 = get_file_sha256(path_to_sha256);
+
 	FILE * input = fopen(path_to_sha256.c_str(), "rb");
 	char buffer[32];
 	fread(buffer, sizeof(char), 32, input);
@@ -146,9 +151,10 @@ auto WebDAV::LocalClient::file_list(const std::string & path) -> std::vector<std
 	std::vector<std::string> file;
 	for (auto i : files) {
 		if (boost::filesystem::is_regular_file(i)) {
-			file.push_back(encrypt(i.generic_string()));
-			get_file_sha256(i.generic_string());
-			file.push_back(i.generic_string() + ".sha256");
+			if (i.generic_string().rfind(".sha256") == std::string::npos) {
+				file.push_back(encrypt(i.generic_string()));
+				//get_file_sha256(i.generic_string());
+			}
 		}
 		else {
 			file.push_back(i.generic_string());
@@ -159,10 +165,10 @@ auto WebDAV::LocalClient::file_list(const std::string & path) -> std::vector<std
 
 auto WebDAV::LocalClient::info_to_string(const std::map<std::string, std::string> & info) -> const std::string{
 	std::stringstream ss;
-	for (auto option : info) {
-		ss << "\t" << option.first << ": " << option.second << std::endl;
-	}
-	return ss.str();
+for (auto option : info) {
+	ss << "\t" << option.first << ": " << option.second << std::endl;
+}
+return ss.str();
 }
 
 auto WebDAV::LocalClient::is_dir(const std::string & check) -> bool {
@@ -171,18 +177,18 @@ auto WebDAV::LocalClient::is_dir(const std::string & check) -> bool {
 
 auto WebDAV::LocalClient::resources_to_string(const std::vector<std::string> & resources) -> const std::string{
 	std::stringstream ss;
-	for (auto resource : resources) {
-		ss << "\t" << "- " << resource << std::endl;
-	}
-	return ss.str();
+for (auto resource : resources) {
+	ss << "\t" << "- " << resource << std::endl;
+}
+return ss.str();
 }
 
 auto WebDAV::LocalClient::set_options(const std::string & cs, const std::string & password, std::map<std::string, std::string> & options) -> void {
 	options =
 	{
-		{"webdav_hostname", "https://webdav.yandex.ru"},
-		{"webdav_login", cs},
-		{"webdav_password", password}
+		{ "webdav_hostname", "https://webdav.yandex.ru" },
+		{ "webdav_login", cs },
+		{ "webdav_password", password }
 	};
 }
 
@@ -192,16 +198,14 @@ auto WebDAV::LocalClient::upload(const std::string & local_dir, const std::strin
 	auto sha_files = check_sha(resources);
 	for (auto i : not_sha_files) {
 		if (boost::filesystem::is_directory(i)) {
-			std::string cut = cut_path(i); std::string d = disk_dir + "/" + cut_path(i);
 			client->create_directory(disk_dir + cut_path(i) + "/", true);
 			upload(i, disk_dir + cut_path(i) + "/", client);
 		}
 		else {
 			auto clear_file(i.substr(0, i.rfind(".enc")));
 			auto clear_disk(disk_dir + cut_path(i).substr(0, cut_path(i).rfind(".enc")));
-			if (!check_hash(clear_file, clear_disk + ".sha256", client)) {
+			if (!check_local_hash(clear_file)) {
 				client->upload(disk_dir + cut_path(i), i);
-				client->upload(disk_dir + cut_path(i).substr(0, cut_path(i).rfind(".enc")) + ".sha256", clear_file + ".sha256");
 			}
 		}
 	}

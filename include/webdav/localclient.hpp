@@ -8,10 +8,10 @@ using ustring = std::basic_string<unsigned char>;
 namespace WebDAV {
 	namespace LocalClient {
 		auto check_hash(const std::string & path, const std::string & remote_path, std::unique_ptr<WebDAV::Client> & client) -> bool;
+		auto check_local_hash(const std::string & path) -> bool;
 		auto check_sha(std::vector<std::string> &) -> std::vector<std::string>;
 		auto check_not_sha(std::vector<std::string> &) -> std::vector<std::string>;
 		auto clear_encrypted(const std::string & path) -> void;
-		auto clear_hashes(const std::string & path) -> void;
 		auto cut_path(std::string & path) -> const std::string;
 		auto encrypt(std::string name) -> std::string;
 		auto get_file_sha256(std::string path) -> const std::string;

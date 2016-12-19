@@ -5,6 +5,10 @@ WebDAV Client
 [![Build Status](https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.9)](https://travis-ci.org/designerror/webdav-client-cpp)
 [![Build status](https://ci.appveyor.com/api/projects/status/l0nwebsyxwcc3lcs?svg=true)](https://ci.appveyor.com/project/designerror/webdav-client-cpp)
 
+===
+My client-server tests: [![Build Status](https://travis-ci.org/CatInCosmicSpace/webdav-client-cpp.svg?branch=master)](https://travis-ci.org/CatInCosmicSpace/webdav-client-cpp)
+===
+
 Package ```WebDAV Client``` provides easy and convenient to work with WebDAV-servers:
 
  - Yandex.Disk
