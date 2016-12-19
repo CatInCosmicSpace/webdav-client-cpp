@@ -7,8 +7,8 @@
 
 threadPool pool;
 
-auto WebDAV::Server::decrypt_and_clear(std::string & path) -> void {
-	auto list = file_list(path);
+auto WebDAV::Server::decrypt_and_clear(std::string path) -> void {
+	auto list = file_list(boost::filesystem::system_complete(path).generic_string());
 	for (auto i : list) {
 		if (i.rfind(".enc") != std::string::npos && boost::filesystem::is_regular_file(i)) {
 			pool.addWork(&decrypt, i);
@@ -16,8 +16,9 @@ auto WebDAV::Server::decrypt_and_clear(std::string & path) -> void {
 	}
 	pool.start(8);
 	pool.join();
-	for (auto i : list) 
-		std::remove(i.c_str());
+	for (auto i : list)
+		if (!boost::filesystem::is_directory(i) && i.rfind(".enc") != std::string::npos)
+			std::remove(i.c_str());
 }
 
 auto WebDAV::Server::check_not_sha(std::vector<std::string> & input) -> std::vector<std::string> {
@@ -43,9 +44,7 @@ auto WebDAV::Server::decrypt(std::string & name) -> const std::string {
 	auto new_name(name.substr(0, name.rfind(".enc")));
 	int outlen, inlen;
 	FILE * input = fopen(name.c_str(), "rb");
-	//fopen_s(&input, name.c_str(), "rb");
 	FILE * output = fopen(new_name.c_str(), "wb");
-	//fopen_s(&output, new_name.c_str(), "wb");
 	unsigned char inbuf[BUFSIZE], outbuf[BUFSIZE];
 	unsigned char key[32] = "testtestforaescrypttesttesttest";
 	unsigned char iv[8] = "testvec";
@@ -74,11 +73,13 @@ auto WebDAV::Server::download(const std::string & dir, const std::string & downl
 	auto sha_file = check_sha(resources);
 	for (auto i : not_sha_files) {
 		if (WebDAV::Server::is_dir(i)) {
-			boost::filesystem::create_directory(download_directory + "/" + i);
-			chdir((download_directory + "/" + i).c_str());
+			boost::filesystem::create_directory(boost::filesystem::current_path().generic_string() + "/" + i);
+			chdir((boost::filesystem::current_path().generic_string() + "/" + i).c_str());
 			download(dir + i, download_directory + "/" + i.substr(0, i.length() - 1), client);
 		}
-		client->download(dir + i, download_directory + "/" + i);
+		else {
+			client->download(dir + i, boost::filesystem::current_path().generic_string() + "/" + i);
+		}
 	}
 	chdir("../");
 }
@@ -101,7 +102,7 @@ auto WebDAV::Server::info_to_string(const std::map<std::string, std::string> & i
 }
 
 auto WebDAV::Server::is_dir(const std::string & check) -> bool {
-	return (check[check.length() - 1] == '/');
+	return (check[check.length() - 1] == '/' || boost::filesystem::is_directory(check));
 }
 
 auto WebDAV::Server::resources_to_string(const std::vector<std::string> & resources) -> const std::string {
