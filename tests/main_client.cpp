@@ -12,10 +12,10 @@
 //#pragma comment(lib, "libcurl.lib")
 //
 //int main(int argc, char * argv[]) {
-//	std::ifstream config("config");
+//	std::ifstream config("config_client");
 //	std::string login, password;
 //	config >> login >> password;
-//
+//	config.close();
 //	//argv[0] - current path, where the programm runs
 //	std::string upload_path = static_cast<std::string>(argv[1]);
 //	std::string disk_directory = static_cast<std::string>(argv[2]);
@@ -42,6 +42,7 @@
 //		}
 //	}
 //	WebDAV::LocalClient::clear_encrypted(upload_path);
-//	WebDAV::LocalClient::clear_hashes(upload_path);
+//	//WebDAV::LocalClient::clear_hashes(upload_path);
+//	std::cout << "< Encrypted files successfully uploaded" << std::endl;
 //	return 0;
 //}
